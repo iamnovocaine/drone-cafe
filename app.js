@@ -25,8 +25,10 @@ app.get('/', function(req, res){
     res.sendFile('./public/client.html', { root: __dirname });
 });
 */
-app.get('/kitchen', function(req, res){
-    res.sendFile('public/kitchen.html', { root: __dirname });
+
+
+app.all('/kitchen', function(req, res){
+    res.redirect('/#!/Kitchen');
 });
 
 app.use(function(req, res){
