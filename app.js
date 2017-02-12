@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const api = require("netology-fake-drone-api"); 
 const app = express();
 //const mongoose = require('mongoose');
-const client = require("./client"); 
+const client = require("./server/client"); 
 
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
