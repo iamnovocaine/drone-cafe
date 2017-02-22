@@ -12,7 +12,51 @@
 	<title>Dron-cafe</title>
 </head>
 <body>
-	<div ng-view></div> 
+	<header>
+		<nav class="top-nav">
+			<div class="container">
+			  <div class="nav-wrapper"><a class="page-title">Dron-cafe</a></div>
+			</div>
+		</nav>
+	</header>
+	<main>
+	<div ng-view></div>
+	</main>
+	
+	<footer class="page-footer">
+		<div class="container">
+		<div class="row">
+		  <div class="col l6 s12">
+			<h5 class="white-text">Dron-cafe</h5>
+			<p class="grey-text text-lighten-4">Вы находитесь в лучшем ресторане мира</p>
+		  </div>
+		  <div class="col l4 offset-l2 s12">
+			<h5 class="white-text">Сайт</h5>
+			<ul>
+			  <li><a class="grey-text text-lighten-3" href="#!">Личный кабинет</a></li>
+			  <li><a class="grey-text text-lighten-3" href="#!">Кухня</a></li>
+
+			</ul>
+		  </div>
+		</div>
+		</div>
+		<div class="footer-copyright">
+			<div class="container">
+			© 2017 Екатерина Федоренко
+			</div>
+		</div>
+	</footer>
+	<style>
+	body {
+		display: flex;
+		min-height: 100vh;
+		flex-direction: column;
+	}
+
+	main {
+		flex: 1 0 auto;
+	}
+	</style>
 	<!--Import jQuery before materialize.js-->
 	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script type="text/javascript" src="bower_components/materialize/dist/js/materialize.min.js"></script>
