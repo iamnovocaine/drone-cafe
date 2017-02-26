@@ -1,13 +1,13 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const api = require("netology-fake-drone-api"); 
 const app = express();
-//const mongoose = require('mongoose');
+
+const server = require("http").createServer(app);
+const io = require("socket.io")(server);
+
 const client = require("./server/client"); 
-
-const server = require('http').createServer(app);
-const io = require('socket.io')(server);
-
+const order = require("./server/order");
+const dish = require("./server/dish");
 
 app.set('port', process.env.PORT || '3000');
 app.listen(app.get('port'), function () {
@@ -19,18 +19,14 @@ app.use(bodyParser.urlencoded({"extended": true}));
 
 app.use(express.static(__dirname + '/public'));
 
-app.get('/', client.find);
-/*
-app.get('/', function(req, res){
-    res.sendFile('./public/client.html', { root: __dirname });
-});
-*/
+app.use('/clients', client);
+(app, io).use('/orders', order);
+app.use('/dishes', dish);
 
-
-app.all('/kitchen', function(req, res){
+/*app.all('/kitchen', function(req, res){
     res.redirect('/#!/Kitchen');
 });
-
+*/
 app.use(function(req, res){
 	res.status(404).send('404 Not Found');
 });

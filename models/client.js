@@ -9,6 +9,6 @@ var clientSchema = Schema({
 	cook: Boolean,
 },{collection: 'clients'});
 
-var Client = mongoose.model('clients', userSchema);
+var Client = mongoose.model('clients', clientSchema);
 
 module.exports = Client;
