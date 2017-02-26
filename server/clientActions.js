@@ -14,16 +14,13 @@ function create(req, res) {
 }
 
 function findOne(req, res) {
-	let email = req.query.email ? req.query.email : {};
+	let email = req.params.id ? req.params.id : '';
 	Client
 		.findOne({email: email}).exec()
         .then(function (findClient) {
             if (!findClient) {
-                return res.send({
-                    error: 'Client not founded'
-                });
+                return res.json({"error": "Client not found"});
             } else {
-				console.log(findClient);
                 res.json(findClient);
             }
         })

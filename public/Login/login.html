@@ -1,13 +1,25 @@
+<div class="container">
+<h3 class="header">Авторизация</h3>
 <div class="row">
-    <form name="auth" role="form">
-        <div>
-			<input type="text" id="name" required>
-            <label for="name">Укажите Имя</label>
-        </div>
-        <div>
-            <input type="email" id="email" required>
-            <label for="email">Укажите Email</label>
-        </div>
-        <submit type="submit">Войти</submit>
-    </form>
+	<div ng-show="error" class="alert alert-danger">{{error}}</div>
+	<form class="col s12" name="auth" ng-submit="login()" role="form">
+		<div class="row">
+			<div class="input-field col s6">
+				<label for="name" data-error="wrong" data-success="right">Ваше имя</label>			
+				<input type="text" name="name" id="name" class="validate" ng-model="name" required />
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field col s6">
+				<label for="email" data-error="wrong" data-success="right">Email</label>
+				<input type="email" name="email" id="email" class="validate" ng-model="email" required />
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field col s6">
+				<button type="submit" ng-disabled="form.$invalid || dataLoading" class="btn btn-danger">Войти</button>
+			</div>
+		</div>
+	</form>
+</div>
 </div>
