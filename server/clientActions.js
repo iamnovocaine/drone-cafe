@@ -1,10 +1,10 @@
 const Client = require("../models/client");
 function create(req, res) {
-	let newClient = [{
+	let newClient = new Client({
         "name": req.body.name,
         "email": req.body.email,
 		"balance": 100,
-    }];
+    });
 	newClient
 		.save()
 		.then(function () {
@@ -14,7 +14,7 @@ function create(req, res) {
 }
 
 function findOne(req, res) {
-	let email = req.query.email ? req.params.email : {};
+	let email = req.query.email ? req.query.email : {};
 	Client
 		.findOne({email: email}).exec()
         .then(function (findClient) {
@@ -23,6 +23,7 @@ function findOne(req, res) {
                     error: 'Client not founded'
                 });
             } else {
+				console.log(findClient);
                 res.json(findClient);
             }
         })

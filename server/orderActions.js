@@ -4,10 +4,10 @@ const mydrone = require("netology-fake-drone-api");
 
 function create(socket) {
 	return function (req, res) {
-		let newOrder = [{
+		let newOrder = new Order({
 			"client": req.body.client,
 			"dish": req.body.dish,
-		}];
+		});
 		newOrder
 			.save()
 			.then(function (newOrder) {
