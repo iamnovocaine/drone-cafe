@@ -1,5 +1,6 @@
 'use strict';
 angular.module('myApp').controller('login', function ($scope, $http, $location/*, $cookieStore*/) {
+	$scope.isAutorized = false;
 	$scope.login = function() {
 		var url = '/server/clients/' + this.email;
 		$http.get(url).then(function(data) {
@@ -9,7 +10,8 @@ angular.module('myApp').controller('login', function ($scope, $http, $location/*
 				var newClient = {"name": $scope.name, "email": $scope.email};
 				$http.post(url, newClient).then(function(data) {
 					sessionStorage.setItem('client', data.data._id);
-					$location.path("/");                   
+					$location.path("/");
+					$scope.isAutorized = true;
 				})
 				.catch(function(data) {
 					console.log(data);
@@ -17,6 +19,7 @@ angular.module('myApp').controller('login', function ($scope, $http, $location/*
 			} else {
 				//есть на сайте
 				sessionStorage.setItem('client', data.data._id);
+				$scope.isAutorized = true;
                 $location.path("/");
 			}		
 		})

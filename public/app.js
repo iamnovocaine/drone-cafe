@@ -27,6 +27,3 @@ myApp.config(['$routeProvider', '$locationProvider', function($routeProvide, $lo
 myApp.controller('kitchen', ['$scope', '$http', '$location', function($scope, $http, $location) {
 	
 }]);
-myApp.controller('client', ['$scope', '$http', '$location', function($scope, $http, $location, $routeParams) {
-	//$scope.client = $routeParams.client;
-}]);
