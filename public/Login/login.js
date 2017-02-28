@@ -1,12 +1,13 @@
 'use strict';
 angular.module('myApp').controller('login', function ($scope, $http, $location, $rootScope) {
+	$rootScope.check();
 	$scope.login = function() {
-		var url = '/server/clients/' + this.email;
+		var url = '/server/clients/?email=' + this.email + '&name=' + this.name;
+		var newClient = {"name": this.name, "email": this.email};
 		$http.get(url).then(function(data) {
 			if(data.data.error) {
 				var url = '/server/clients/';
 				//нет на сайте, добавляем нового клиента
-				var newClient = {"name": $scope.name, "email": $scope.email};
 				$http.post(url, newClient).then(function(data) {
 					sessionStorage.setItem('client', data.data._id);
 					$location.path("/");

@@ -12,19 +12,36 @@ function create(req, res) {
         })
         .catch(error => res.status(500).send({error: error.message}));
 }
+function isEmpty(object) {
+    return JSON.stringify(object) == "{}";
+}
 
 function findOne(req, res) {
-	let email = req.params.id ? req.params.id : '';
-	Client
-		.findOne({email: email}).exec()
-        .then(function (findClient) {
-            if (!findClient) {
-                return res.json({"error": "Client not found"});
-            } else {
-                res.json(findClient);
-            }
-        })
-        .catch(error => res.status(500).send({error: error.message}));
+	if(!isEmpty(req.query)) {
+		let myQuery = {};
+		if(req.query.id) 
+			myQuery._id = req.query.id;
+		if(req.query.email)
+			myQuery.email = req.query.email;
+		if(req.query.name)
+			myQuery.name = req.query.name;
+		if(isEmpty(myQuery)) {
+			res.json({"error": "Bad request"})
+		} else {
+			Client
+				.findOne(myQuery).exec()
+				.then(function (findClient) {
+					if (!findClient) {
+						return res.json({"error": "Client not found"});
+					} else {
+						res.json(findClient);
+					}
+				})
+			.catch(error => res.status(500).send({error: error.message}));
+		}
+	} else {
+		res.json({"error": "Bad request"})
+	}
 }
 function buy(id, sum) {
 	return Client
@@ -34,11 +51,11 @@ function update(req, res) {
 	let id = req.params.id;
 	let sum = req.query.sum ? req.query.sum : +100;
 	Client
-		.findOneAndUpdate({"_id": id}, {$inc: {"balance": sum}}).exec()
+		.findOneAndUpdate({"_id": id}, {$inc: {"balance": sum}}, {returnNewDocument: true}).exec()
 		.then(function (findClient) {
             if (!findClient) {
                 return res.send({
-                    error: 'Client not founded'
+                    error: 'Client not found'
                 });
             } else {
                 res.json(findClient);

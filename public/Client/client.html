@@ -1,7 +1,16 @@
 <div class="container" ng-if="isAutorized">
 <h3 class="header">Личный кабинет</h3>
 <div class="row">
-	<a href="#" ng-click="logout()">Выйти</a>
+	<div class="col s4 truncate card-panel hoverable">
+		<h4>{{clientInfo.name}}</h4>
+		<p>Ваш баланс: {{clientInfo.balance}} Г.к.</p>
+		<p><a class="btn" ng-click="addMoney()">Пополнить</a></p>
+		<p><a class="btn" ng-click="logout()">Выйти</a></p>
+	</div>
+	<div class="col s8">
+		<h4>Заказы</h4>
+		<p><a class="btn" href="#!/dishes">Добавить</a></p>
+	</div>
 </div>
 </div>
 <div class="container" ng-if="!isAutorized">

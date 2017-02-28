@@ -34,6 +34,10 @@ myApp.config(['$routeProvider', '$locationProvider', function($routeProvide, $lo
 			templateUrl: 'Login/login.html',
 			controller: 'login'
 		})
+		.when('/dishes', {
+			templateUrl: 'Dish/dish.html',
+			controller: 'dish'
+		})
 		.when('/kitchen', {
 			templateUrl: 'Kitchen/kitchen.html',
 			controller: 'kitchen'

@@ -4,6 +4,6 @@ var client = require("./clientActions");
 
 router
 	.post("/clients", client.create)
-	.get("/clients/:id", client.findOne)
+	.get("/clients/", client.findOne)
 	.put("/clients/:id", client.update);
 module.exports = router;

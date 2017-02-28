@@ -1,15 +1,15 @@
 'use strict';
-angular.module('myApp').controller('client', function ($scope, $http, $location, $rootScope) {
+angular.module('myApp').controller('dish', function ($scope, $http, $location, $rootScope) {
 	$rootScope.check();
 	if(!$rootScope.isAutorized) {
 		$location.path("/login");
 	} else {
-		$scope.clientInfo = '';
-		var url = '/server/clients/?id=' + sessionStorage.getItem('client');
+		$scope.dishes = {};
+		var url = '/server/dishes';
 		$http.get(url).then(function(data) {
 			if(!data.data.error) {
-				$scope.clientInfo = data.data;
-				$scope.addMoney = function() {				
+				$scope.dishes = data.data;
+				/*$scope.addMoney = function() {				
 					var url = '/server/clients/' + sessionStorage.getItem('client');
 					$http.put(url).then(function(data) {
 						Materialize.toast('Баланс пополнен', 4000);
@@ -19,7 +19,7 @@ angular.module('myApp').controller('client', function ($scope, $http, $location,
 						Materialize.toast('Баланс не пополнен', 4000);
 						console.log(data);
 					});
-				}
+				}*/
 			}
 		})
 		.catch(function(data) {
