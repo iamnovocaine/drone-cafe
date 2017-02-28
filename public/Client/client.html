@@ -4,3 +4,9 @@
 	<a href="#" ng-click="logout()">Выйти</a>
 </div>
 </div>
+<div class="container" ng-if="!isAutorized">
+	<h3 class="header">Для заказов на сайте вы должны авторизоваться</h3>
+	<div class="row">
+		<a href="/#!/login">Войти</a>
+	</div>
+</div>
