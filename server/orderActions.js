@@ -8,6 +8,9 @@ function create(socket) {
 			"client": req.body.client,
 			"dish": req.body.dish,
 		});
+		console.log(newOrder);
+		res.json('ok');
+		/*
 		newOrder
 			.save()
 			.then(function (newOrder) {
@@ -22,6 +25,7 @@ function create(socket) {
 				res.json(newOrder);
 			})
 			.catch(error => res.status(500).send({error: error.message}));
+		*/
 	}
 }
 function list(req, res) {

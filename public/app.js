@@ -1,5 +1,5 @@
 'use strict';
-var myApp = angular.module('myApp', ['ngRoute', 'ngCookies'  /*'myApp.Client','myApp.Kitchen','myApp.Login'*/]);
+var myApp = angular.module('myApp', ['ngRoute', 'ngCookies', 'btford.socket-io']);
 
 myApp.run(['$rootScope', '$location', function($rootScope, $location) {
 	$rootScope.isAutorized = false;
@@ -46,3 +46,17 @@ myApp.config(['$routeProvider', '$locationProvider', function($routeProvide, $lo
 			redirectTo: '/login'
 		});	
 }]);
+myApp.factory("SocketClient", function (socketFactory, config) {
+	var appIoSocket = io.connect(config.apiUrl + "/client");
+	appSocket = socketFactory({
+		ioSocket: appIoSocket
+	});
+	return appSocket;
+});
+myApp.factory("SocketKitchen", function (socketFactory, config) {
+	var appIoSocket = io.connect(config.apiUrl + "/kitchen");
+	appSocket = socketFactory({
+		ioSocket: appIoSocket
+	});
+	return appSocket;
+});

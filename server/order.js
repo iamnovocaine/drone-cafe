@@ -2,11 +2,11 @@ var express = require('express');
 var router = express.Router();
 var order = require("./orderActions");
 
-router
-	.post("/orders/:id", order.create)
-	.get("/orders", order.list)
-	.delete("/orders/:id", order.deleteOne)
-	.put("/orders/:id", order.update)
-	.put("/orders/:id/deliver", order.deliver);
-
-module.exports = router;
+module.exports = function(router, socket) {
+	router
+		.post("/server/orders", order.create(socket))
+		.get("/server/orders", order.list)
+		.delete("/server/orders/:id", order.deleteOne)
+		.put("/server/orders/:id", order.update(socket))
+		.put("/server/orders/:id/deliver", order.deliver(socket));
+}

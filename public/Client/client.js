@@ -1,5 +1,5 @@
 'use strict';
-angular.module('myApp').controller('client', function ($scope, $http, $location, $rootScope) {
+angular.module('myApp').controller('client', function ($scope, $http, $location, $rootScope/*, SocketClient*/) {
 	$rootScope.check();
 	if(!$rootScope.isAutorized) {
 		$location.path("/login");
@@ -8,6 +8,7 @@ angular.module('myApp').controller('client', function ($scope, $http, $location,
 		var url = '/server/clients/?id=' + sessionStorage.getItem('client');
 		$http.get(url).then(function(data) {
 			if(!data.data.error) {
+				//SocketClient.emit("newConnect", {clientID: data.data._id});
 				$scope.clientInfo = data.data;
 				$scope.addMoney = function() {				
 					var url = '/server/clients/' + sessionStorage.getItem('client');

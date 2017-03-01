@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const server = require("http").createServer(app);
 const io = require("socket.io")(server);
 
-const client = require("./server/client"); 
+const clientRoute = require("./server/client"); 
 const order = require("./server/order");
 const dish = require("./server/dish");
 
@@ -21,9 +21,17 @@ mongoose.connect(url);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
-  console.log("we're connected!");
+	console.log("we're connected!");
 });
 
+let kitchen = io.of("/kitchen");
+let client = io.of("/client");
+client.on("connection", function (socket) {
+	socket.on("newConnect", function (data) {
+		socket.join(data.client);
+	});
+});
+	
 var menu = require("./menu");
 var Dish = require("./models/dish");
 
@@ -58,9 +66,9 @@ app.use(bodyParser.urlencoded({"extended": true}));
 
 app.use(express.static(__dirname + '/public'));
 
-app.use('/server', client);
-app.use('/server', order);
+app.use('/server', clientRoute);
 app.use('/server', dish);
+order(app, io);
 
 app.use(function(req, res){
 	res.status(404).send('404 Not Found');
