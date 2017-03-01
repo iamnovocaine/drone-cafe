@@ -18,7 +18,7 @@ function create(socket) {
 			})
 			.then(function(client) {
 				newOrder.client = client;
-				console.log(socket);
+				//console.log(socket);
 				//socket.kitchen.emit("newOrder", newOrder);
 				res.json(newOrder);
 			})
@@ -27,7 +27,7 @@ function create(socket) {
 }
 function list(req, res) {
 	let query = req.query ? req.query : {};
-	Order.find(query).exec()
+	Order.find(query).populate('dish').exec()
         .then(function (findOrder) {
             if (!findOrder) {
                 return res.send({
@@ -73,7 +73,7 @@ function update(socket) {
 						error: 'Order not found'
 					});
 				} else {
-					socket.client.to(findOrder.user).emit("ChangeOfStatus", findOrder);
+					//socket.client.to(findOrder.user).emit("ChangeOfStatus", findOrder);
 					res.json(findOrder);
 				}
 			})

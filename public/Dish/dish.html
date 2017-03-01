@@ -17,8 +17,11 @@
 			</small>
 			</div>
 			<div class="card-action">
-			<p>{{oneDish.price}} Г.к.</p>
-			<p><a class="btn" ng-click="addDish(oneDish._id)">Добавить</a></p>
+				<p>{{oneDish.price}} Г.к.</p>
+				<p ng-if="checkPrice(oneDish.price);"><a class="btn" ng-click="addDish(oneDish._id)">Добавить</a></p>
+				<div ng-if="!checkPrice(oneDish.price);">
+					Пополните баланс на {{ needMoney(oneDish.price)}} Г.к.
+				</div>
 			</div>
 			</div>
 		</div>

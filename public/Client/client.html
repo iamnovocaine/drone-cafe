@@ -10,6 +10,13 @@
 	<div class="col s8">
 		<h4>Заказы</h4>
 		<p><a class="btn" href="#!/dishes">Добавить</a></p>
+		<div class="row">
+			<div class="col s12" ng-repeat="order in orders">
+				<p><b>{{order.dish.title}}</b></p>
+				<p>{{order.status}}</p>
+				<div class="divider"></div>
+			</div>
+		</div>
 	</div>
 </div>
 </div>
