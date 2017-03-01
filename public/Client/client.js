@@ -1,5 +1,5 @@
 'use strict';
-angular.module('myApp').controller('client', function ($scope, $http, $location, $rootScope/*, SocketClient*/) {
+angular.module('myApp').controller('client', function ($scope, $http, $location, $rootScope, SocketClient) {
 	$rootScope.check();
 	if(!$rootScope.isAutorized) {
 		$location.path("/login");
@@ -8,7 +8,7 @@ angular.module('myApp').controller('client', function ($scope, $http, $location,
 		var url = '/server/clients/?id=' + sessionStorage.getItem('client');
 		$http.get(url).then(function(data) {
 			if(!data.data.error) {
-				//SocketClient.emit("newConnect", {clientID: data.data._id});
+				SocketClient.emit("newConnect", {clientID: data.data._id});
 				$scope.clientInfo = data.data;
 				$scope.addMoney = function() {				
 					var url = '/server/clients/' + sessionStorage.getItem('client');
@@ -20,7 +20,16 @@ angular.module('myApp').controller('client', function ($scope, $http, $location,
 						Materialize.toast('Баланс не пополнен', 4000);
 						console.log(data);
 					});
-				}
+				}				
+				SocketClient.on("statusChanged", function (changedOrder) {
+					updateOrderList(changedOrder);
+				});
+				SocketClient.on("orderDeleted", function (deletedOrder) {
+					removeFromList(deletedOrder);
+				});
+				SocketClient.on("balanceChanged", function (balance) {
+					updateBalance(balance);
+				});
 			}
 		})
 		.catch(function(data) {

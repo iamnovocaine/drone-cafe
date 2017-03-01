@@ -14,6 +14,24 @@ function list(req, res) {
         })
         .catch(error => res.status(500).send({error: error.message}));
 }
+function findOne(req, res) {
+	if(req.params.id) {
+		id = req.params.id;
+		Dish.findOne({"_id":id}).exec()
+			.then(function (findDish) {
+				if (!findDish) {
+					return res.json({"error": "Dish not found"});
+				} else {
+					res.json(findDish);
+				}
+			})
+			.catch(error => res.status(500).send({error: error.message}));
+	}
+	else {
+		res.json({"error": "Bad request"});
+	}
+}
 module.exports = {
-    list
+    list,
+	findOne
 };

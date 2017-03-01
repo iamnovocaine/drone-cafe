@@ -2,9 +2,6 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 const mongoose = require('mongoose');
-const server = require("http").createServer(app);
-const io = require("socket.io")(server);
-
 const clientRoute = require("./server/client"); 
 const order = require("./server/order");
 const dish = require("./server/dish");
@@ -13,9 +10,11 @@ const url = 'mongodb://localhost:27017/drone-cafe';
 
 app.set('port', process.env.PORT || '3000');
 
-app.listen(app.get('port'), function () {
+const server = app.listen(app.get('port'), function () {
     console.log('Express started on port http://localhost:' + app.get('port'));
 });
+
+const io = require("socket.io")(server);
 
 mongoose.connect(url);
 var db = mongoose.connection;
@@ -28,7 +27,7 @@ let kitchen = io.of("/kitchen");
 let client = io.of("/client");
 client.on("connection", function (socket) {
 	socket.on("newConnect", function (data) {
-		socket.join(data.client);
+		socket.join(data.clientID);
 	});
 });
 	

@@ -46,17 +46,14 @@ myApp.config(['$routeProvider', '$locationProvider', function($routeProvide, $lo
 			redirectTo: '/login'
 		});	
 }]);
-myApp.factory("SocketClient", function (socketFactory, config) {
-	var appIoSocket = io.connect(config.apiUrl + "/client");
-	appSocket = socketFactory({
-		ioSocket: appIoSocket
+myApp.factory("SocketClient", function (socketFactory) {
+	return socketFactory({
+		ioSocket: io.connect("/client")
 	});
-	return appSocket;
 });
-myApp.factory("SocketKitchen", function (socketFactory, config) {
-	var appIoSocket = io.connect(config.apiUrl + "/kitchen");
-	appSocket = socketFactory({
-		ioSocket: appIoSocket
+
+myApp.factory("SocketKitchen", function (socketFactory) {
+	return socketFactory({
+		ioSocket: io.connect("/kitchen")
 	});
-	return appSocket;
 });

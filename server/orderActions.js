@@ -8,7 +8,6 @@ function create(socket) {
 			"client": req.body.client,
 			"dish": req.body.dish,
 		});
-		console.log(newOrder);
 		newOrder
 			.save()
 			.then(function (newOrder) {
@@ -19,6 +18,7 @@ function create(socket) {
 			})
 			.then(function(client) {
 				newOrder.client = client;
+				console.log(socket);
 				//socket.kitchen.emit("newOrder", newOrder);
 				res.json(newOrder);
 			})
