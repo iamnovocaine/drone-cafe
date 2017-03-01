@@ -2,6 +2,7 @@
 var myApp = angular.module('myApp', ['ngRoute', 'ngCookies', 'btford.socket-io']);
 
 myApp.run(['$rootScope', '$location', function($rootScope, $location) {
+	
 	$rootScope.isAutorized = false;
 	$rootScope.check = function () {
 		var data = sessionStorage.getItem('client');

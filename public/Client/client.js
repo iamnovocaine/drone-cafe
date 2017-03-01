@@ -8,6 +8,7 @@ angular.module('myApp').controller('client', function ($scope, $http, $location,
 		var url = '/server/clients/?id=' + sessionStorage.getItem('client');
 		$http.get(url).then(function(data) {
 			if(!data.data.error) {
+				console.log(SocketClient);
 				SocketClient.emit("newConnect", {clientID: data.data._id});
 				$scope.clientInfo = data.data;
 				$scope.orders = {};
@@ -31,14 +32,21 @@ angular.module('myApp').controller('client', function ($scope, $http, $location,
 					});
 				}	
 				SocketClient.on("statusChanged", function (changedOrder) {
-					updateOrderList(changedOrder);
+					$scope.orders = $scope.orders.map(function (order) {
+						if (order._id == changedOrder._id)
+							order = changedOrder;
+						return order;
+					})
 				});
 				SocketClient.on("orderDeleted", function (deletedOrder) {
-					removeFromList(deletedOrder);
+					$scope.orders = $scope.orders.filter(function (order) {
+						return order._id != deletedOrder._id;
+					});
 				});
+				/*
 				SocketClient.on("balanceChanged", function (balance) {
 					updateBalance(balance);
-				});
+				});*/
 			}
 		})
 		.catch(function(data) {

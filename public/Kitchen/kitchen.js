@@ -1,4 +1,9 @@
-myApp.controller('kitchen', ['$scope', '$http', '$location', function($scope, $http, $location, $rootScope, SocketKithen){
+'use strict';
+angular.module('myApp').controller('kitchen', function($scope, $http, $location, $rootScope, SocketKitchen){
+	SocketKitchen.on("newOrder", function (data) {
+        $scope.newOrders.unshift(data);
+    });
+	
 	$scope.newOrders = [];
 	$scope.orders = [];
 	var url = '/server/orders/?status=Заказано';
@@ -48,4 +53,4 @@ myApp.controller('kitchen', ['$scope', '$http', '$location', function($scope, $h
 			console.log(data);
 		});
 	}
-}]);
+});
