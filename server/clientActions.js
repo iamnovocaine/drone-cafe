@@ -67,5 +67,6 @@ function update(req, res) {
 module.exports = {
     create,
 	findOne, 
-	update
+	update,
+	buy
 };

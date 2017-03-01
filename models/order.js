@@ -5,11 +5,11 @@ var Schema = mongoose.Schema;
 var orderSchema = Schema({
     client: {
 		type: Schema.Types.ObjectId,
-        ref: 'Client'
+        ref: 'client'
 	},
     dish: {
 		type: Schema.Types.ObjectId,
-        ref: 'Dish'
+        ref: 'dish'
 	},
     status: {
 		type: String, 

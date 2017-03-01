@@ -9,23 +9,20 @@ function create(socket) {
 			"dish": req.body.dish,
 		});
 		console.log(newOrder);
-		res.json('ok');
-		/*
 		newOrder
 			.save()
 			.then(function (newOrder) {
 				return Order.populate(newOrder, 'dish');
 			})
 			.then(function (newOrder) {
-				return Client.buy(newOrder.client, -newOrder.sum);
+				return Client.buy(newOrder.client, -newOrder.dish.price);
 			})
 			.then(function(client) {
 				newOrder.client = client;
-				socket.kitchen.emit("newOrder", newOrder);
+				//socket.kitchen.emit("newOrder", newOrder);
 				res.json(newOrder);
 			})
 			.catch(error => res.status(500).send({error: error.message}));
-		*/
 	}
 }
 function list(req, res) {
