@@ -21,11 +21,6 @@ myApp.run(['$rootScope', '$location', function($rootScope, $location) {
     };
 }])
 myApp.config(['$routeProvider', '$locationProvider', function($routeProvide, $locationProvider) {
-	$locationProvider.html5Mode({
-		enable: true,
-		requireBase: false
-	})
-	
 	$routeProvide
 		.when('/', {
 			templateUrl: 'Client/client.html',
