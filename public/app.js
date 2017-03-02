@@ -42,14 +42,19 @@ myApp.config(['$routeProvider', '$locationProvider', function($routeProvide, $lo
 			redirectTo: '/login'
 		});	
 }]);
-myApp.factory("SocketClient", function (socketFactory) {
+myApp.constant('config', {
+	apiUrl: 'https://stark-tundra-70250.herokuapp.com/'
+});
+
+myApp.factory("SocketClient", function (socketFactory, config) {
 	return socketFactory({
-		ioSocket: io.connect("/client")
+		ioSocket: io.connect(config.apiUrl + "/client")
 	});
 });
 
-myApp.factory("SocketKitchen", function (socketFactory) {
+myApp.factory("SocketKitchen", function (socketFactory, config) {
 	return socketFactory({
-		ioSocket: io.connect("/kitchen")
+		ioSocket: io.connect(config.apiUrl + "/kitchen")
 	});
 });
+
