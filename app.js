@@ -6,6 +6,7 @@ const clientRoute = require("./server/client");
 const order = require("./server/order");
 const dish = require("./server/dish");
 
+process.env.PWD = process.cwd()
 const url = 'mongodb://localhost:27017/drone-cafe4';
 
 app.set('port', process.env.PORT || '3000');
