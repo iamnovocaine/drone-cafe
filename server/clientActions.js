@@ -15,7 +15,6 @@ function create(req, res) {
 function isEmpty(object) {
     return JSON.stringify(object) == "{}";
 }
-
 function findOne(req, res) {
 	if(!isEmpty(req.query)) {
 		let myQuery = {};

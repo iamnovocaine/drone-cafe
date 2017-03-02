@@ -6,15 +6,13 @@ const clientRoute = require("./server/client");
 const order = require("./server/order");
 const dish = require("./server/dish");
 
-const url = 'mongodb://localhost:27017/drone-cafe';
+const url = 'mongodb://localhost:27017/drone-cafe4';
 
 app.set('port', process.env.PORT || '3000');
 
 const server = app.listen(app.get('port'), function () {
     console.log('Express started on port http://localhost:' + app.get('port'));
 });
-
-const io = require("socket.io")(server);
 
 mongoose.connect(url);
 var db = mongoose.connection;
@@ -23,14 +21,8 @@ db.once('open', function() {
 	console.log("we're connected!");
 });
 
-let kitchen = io.of("/kitchen");
-let client = io.of("/client");
-client.on("connection", function (socket) {
-	socket.on("newConnect", function (data) {
-		socket.join(data.clientID);
-	});
-});
-	
+let socket = require('./socket')(server);
+
 var menu = require("./menu");
 var Dish = require("./models/dish");
 
@@ -67,7 +59,7 @@ app.use(express.static(__dirname + '/public'));
 
 app.use('/server', clientRoute);
 app.use('/server', dish);
-order(app, io);
+order(app, socket);
 
 app.use(function(req, res){
 	res.status(404).send('404 Not Found');

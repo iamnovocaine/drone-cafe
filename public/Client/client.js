@@ -1,6 +1,20 @@
 'use strict';
 angular.module('myApp').controller('client', function ($scope, $http, $location, $rootScope, SocketClient) {
 	$rootScope.check();
+	SocketClient.on("ChangeOfStatus", function (changedOrder) {
+		console.log(changedOrder);
+		$scope.orders = $scope.orders.map(function (order) {
+			if (order._id == changedOrder._id)
+				order = changedOrder;
+			return order;
+		})
+	});
+	SocketClient.on("orderDeleted", function (deletedOrder) {
+		console.log(deletedOrder);
+		$scope.orders = $scope.orders.filter(function (order) {
+			return order._id != deletedOrder._id;
+		});
+	});
 	if(!$rootScope.isAutorized) {
 		$location.path("/login");
 	} else {
@@ -30,19 +44,7 @@ angular.module('myApp').controller('client', function ($scope, $http, $location,
 						Materialize.toast('Баланс не пополнен', 4000);
 						console.log(data);
 					});
-				}	
-				SocketClient.on("statusChanged", function (changedOrder) {
-					$scope.orders = $scope.orders.map(function (order) {
-						if (order._id == changedOrder._id)
-							order = changedOrder;
-						return order;
-					})
-				});
-				SocketClient.on("orderDeleted", function (deletedOrder) {
-					$scope.orders = $scope.orders.filter(function (order) {
-						return order._id != deletedOrder._id;
-					});
-				});
+				}
 				/*
 				SocketClient.on("balanceChanged", function (balance) {
 					updateBalance(balance);

@@ -5,10 +5,9 @@ var Schema = mongoose.Schema;
 var clientSchema = Schema({
     email: String,
     name: String,
-    balance: Number,
-	cook: Boolean,
-},{collection: 'clients'});
+    balance: Number
+},{collection: 'client'});
 
-var Client = mongoose.model('clients', clientSchema);
+var Client = mongoose.model('client', clientSchema);
 
 module.exports = Client;

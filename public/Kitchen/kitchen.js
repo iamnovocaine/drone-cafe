@@ -45,8 +45,16 @@ angular.module('myApp').controller('kitchen', function($scope, $http, $location,
 		$http.put(url, {"status": "Доставляется"}).then(function(data) {
 			if(!data.data.error) {
 				Materialize.toast('Блюдо готово!', 1000);
-				$scope.orders.splice(index, 1);
-				//отправить на доставку
+				$scope.orders.splice(index, 1);				
+				var url = '/server/orders/' + id + '/deliver';
+				$http.get(url).then(function(data) {
+					if(!data.data.error) {
+						console.log(data);
+					}
+				})
+				.catch(function(data) {
+					console.log(data);
+				});
 			}
 		})
 		.catch(function(data) {

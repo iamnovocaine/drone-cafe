@@ -8,5 +8,5 @@ module.exports = function(router, socket) {
 		.get("/server/orders", order.list)
 		.delete("/server/orders/:id", order.deleteOne)
 		.put("/server/orders/:id", order.update(socket))
-		.put("/server/orders/:id/deliver", order.deliver(socket));
+		.get("/server/orders/:id/deliver", order.deliver(socket));
 }
