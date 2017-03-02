@@ -7,7 +7,8 @@ const order = require("./server/order");
 const dish = require("./server/dish");
 
 process.env.PWD = process.cwd()
-const url = 'mongodb://localhost:27017/drone-cafe4';
+
+const url = process.env.MONGODB_URI || 'mongodb://localhost/drone-cafe';
 
 app.set('port', process.env.PORT || '3000');
 
@@ -56,10 +57,7 @@ Dish
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({"extended": true}));
 
-//app.use(express.static(__dirname + '/public'));
-//app.use(express.static('./public'));
-app.use(express.static(process.env.PWD+'/public'));
-
+app.use(express.static(process.env.PWD+'./public'));
 
 app.use('/server', clientRoute);
 app.use('/server', dish);
